@@ -22,7 +22,7 @@ data.to_csv("changed_data.csv")
 
 #creating new columns in the dataframe
 
-#syas that the new column, Test, is equal to fare + 10
+#says that the new column, Test, is equal to fare + 10
 data["Test"] = data["Fare"] + 10
 print(data.head())
 
@@ -42,14 +42,34 @@ print(data[["Age", "Fare"]].mean())
 
 #or you could do multiple different functions
 
-print(data.agg({
+print(data.agg({ # agg stands for aggregate
     "Age": ["min", "max", "median"],
     "Fare": ["min", "max", "median"] # you don't have to do the same for both, you can use different ones
 }))
 
-#by classifying the classes by gender, you can find the mean fare for each gender's class
+#by classifying the classes by gender using groupby, you can find the mean fare for each gender's class
 print(data.groupby(["Sex", "Pclass"])["Fare"].mean())
 
 #the amount of rows in each class
 
 print(data["Pclass"].value_counts())
+
+#sorting columns
+
+#this allows you to sort example, name, by their example, ages
+data_sort_ascending = data.sort_values(by = "Age")
+print(data_sort_ascending[["Name", "Age"]])
+
+#and this one does it in descending order
+data_sort_descending = data.sort_values(by = "Age", ascending = False)
+print(data_sort_descending[["Name", "Age"]])
+
+#creating a column 2
+
+#this one replaces male with M and female with F
+data["Gender"] = data["Sex"].replace({"male":"M", "female": "F"})
+print(data.head())
+
+#this one makes all names lowercase
+data["NameLowercase"] = data["Name"].str.lower()
+print(data.head())
